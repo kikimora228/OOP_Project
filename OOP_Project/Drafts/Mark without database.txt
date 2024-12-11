@@ -1,0 +1,86 @@
+#Mark (class)
+
+
+package models;
+
+public class Mark {
+    private double firstAttestation;
+    private double secondAttestation;
+    private double finalExam;
+
+    public Mark() {
+        this.firstAttestation = 0;
+        this.secondAttestation = 0;
+        this.finalExam = 0;
+    }
+
+    public double getFirstAttestation() {
+        return firstAttestation;
+    }
+
+    public void setFirstAttestation(double firstAttestation) {
+        this.firstAttestation = firstAttestation;
+    }
+
+    public double getSecondAttestation() {
+        return secondAttestation;
+    }
+
+    public void setSecondAttestation(double secondAttestation) {
+        this.secondAttestation = secondAttestation;
+    }
+
+    public double getFinalExam() {
+        return finalExam;
+    }
+
+    public void setFinalExam(double finalExam) {
+        this.finalExam = finalExam;
+    }
+}
+
+
+
+
+#MarkController (without database)
+package controllers;
+
+import models.Mark;
+
+public class MarkController {
+    public Mark createMark() {
+        return new Mark();
+    }
+
+    public void updateFirstAttestation(Mark mark, double score) {
+        mark.setFirstAttestation(score);
+    }
+
+    public void updateSecondAttestation(Mark mark, double score) {
+        mark.setSecondAttestation(score);
+    }
+
+    public void updateFinalExam(Mark mark, double score) {
+        mark.setFinalExam(score);
+    }
+
+    public void displayMarkDetails(Mark mark) {
+        System.out.println("First Attestation: " + mark.getFirstAttestation());
+        System.out.println("Second Attestation: " + mark.getSecondAttestation());
+        System.out.println("Final Exam: " + mark.getFinalExam());
+    }
+}
+
+
+
+
+Замена database (IdGenerator)
+package utils;
+
+public class IdGenerator {
+    private static int currentId = 1;
+
+    public static int nextId() {
+        return currentId++;
+    }
+}
