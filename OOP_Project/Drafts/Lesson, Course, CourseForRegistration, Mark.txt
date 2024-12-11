@@ -1,0 +1,294 @@
+
+
+
+
+#Lesson Model
+package models;
+
+import enums.LessonType;
+import enums.WeekDays;
+import users.Teacher;
+import java.util.List;
+
+public class Lesson {
+    private LessonType lessonType;
+    private List<WeekDays> days;
+    private Teacher teacher;
+
+    public Lesson(LessonType lessonType, List<WeekDays> days, Teacher teacher) {
+        this.lessonType = lessonType;
+        this.days = days;
+        this.teacher = teacher;
+    }
+
+    public LessonType getLessonType() {
+        return lessonType;
+    }
+
+    public void setLessonType(LessonType lessonType) {
+        this.lessonType = lessonType;
+    }
+
+    public List<WeekDays> getDays() {
+        return days;
+    }
+
+    public void setDays(List<WeekDays> days) {
+        this.days = days;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
+}
+
+
+
+
+#Lesson Controller
+package controllers;
+
+import models.Lesson;
+import enums.LessonType;
+import enums.WeekDays;
+import users.Teacher;
+import java.util.List;
+
+public class LessonController {
+    public Lesson createLesson(LessonType lessonType, List<WeekDays> days, Teacher teacher) {
+        return new Lesson(lessonType, days, teacher);
+    }
+
+    public void updateLessonType(Lesson lesson, LessonType lessonType) {
+        lesson.setLessonType(lessonType);
+    }
+
+    public void updateLessonDays(Lesson lesson, List<WeekDays> days) {
+        lesson.setDays(days);
+    }
+
+    public void updateLessonTeacher(Lesson lesson, Teacher teacher) {
+        lesson.setTeacher(teacher);
+    }
+
+    public void displayLessonDetails(Lesson lesson) {
+        System.out.println("Lesson Type: " + lesson.getLessonType());
+        System.out.println("Teacher: " + lesson.getTeacher());
+        System.out.println("Scheduled Days: " + lesson.getDays());
+    }
+}
+
+
+
+
+#Course Model
+package models;
+
+import enums.ElectiveType;
+import models.Lesson;
+import users.Teacher;
+import java.util.List;
+
+public class Course {
+    private String courseName;
+    private ElectiveType electiveType;
+    private List<Teacher> instructors;
+    private List<Lesson> lessons;
+
+    public Course(String courseName, ElectiveType electiveType) {
+        this.courseName = courseName;
+        this.electiveType = electiveType;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public ElectiveType getElectiveType() {
+        return electiveType;
+    }
+
+    public List<Teacher> getInstructors() {
+        return instructors;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void addInstructor(Teacher teacher) {
+        instructors.add(teacher);
+    }
+
+    public void addLesson(Lesson lesson) {
+        lessons.add(lesson);
+    }
+}
+
+
+
+
+#Course Controller
+package controllers;
+
+import models.Course;
+import enums.ElectiveType;
+import models.Lesson;
+import users.Teacher;
+
+public class CourseController {
+    public Course createCourse(String courseName, ElectiveType electiveType) {
+        return new Course(courseName, electiveType);
+    }
+
+    public void addInstructor(Course course, Teacher teacher) {
+        course.addInstructor(teacher);
+    }
+
+    public void addLesson(Course course, Lesson lesson) {
+        course.addLesson(lesson);
+    }
+
+    public void displayCourseDetails(Course course) {
+        System.out.println("Course Name: " + course.getCourseName());
+        System.out.println("Elective Type: " + course.getElectiveType());
+        System.out.println("Instructors: " + course.getInstructors());
+        System.out.println("Lessons: " + course.getLessons());
+    }
+}
+
+
+
+
+#CourseForRegistration Model
+package models;
+
+import users.Student;
+import models.Course;
+
+public class CourseForRegistration {
+    private Student student;
+    private Course course;
+
+    public CourseForRegistration(Student student, Course course) {
+        this.student = student;
+        this.course = course;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+}
+
+___CourseForRegistration Controller
+package controllers;
+
+import models.CourseForRegistration;
+import users.Student;
+import models.Course;
+
+public class CourseForRegistrationController {
+    public CourseForRegistration registerStudentToCourse(Student student, Course course) {
+        return new CourseForRegistration(student, course);
+    }
+
+    public void displayRegistrationDetails(CourseForRegistration registration) {
+        System.out.println("Student: " + registration.getStudent());
+        System.out.println("Course: " + registration.getCourse());
+    }
+}
+
+
+
+
+#Mark Model
+package models;
+
+import database.Database;
+
+public class Mark {
+    private int markId;
+    private double firstAttestation;
+    private double secondAttestation;
+    private double finalExam;
+
+    {
+        markId = Database.nextId();
+    }
+
+    public Mark() {
+        this.firstAttestation = 0;
+        this.secondAttestation = 0;
+        this.finalExam = 0;
+    }
+
+    public int getMarkId() {
+        return markId;
+    }
+
+    public double getFirstAttestation() {
+        return firstAttestation;
+    }
+
+    public void setFirstAttestation(double firstAttestation) {
+        this.firstAttestation = firstAttestation;
+    }
+
+    public double getSecondAttestation() {
+        return secondAttestation;
+    }
+
+    public void setSecondAttestation(double secondAttestation) {
+        this.secondAttestation = secondAttestation;
+    }
+
+    public double getFinalExam() {
+        return finalExam;
+    }
+
+    public void setFinalExam(double finalExam) {
+        this.finalExam = finalExam;
+    }
+}
+
+
+
+
+#Mark Controller
+package controllers;
+
+import models.Mark;
+
+public class MarkController {
+    public Mark createMark() {
+        return new Mark();
+    }
+
+    public void updateFirstAttestation(Mark mark, double score) {
+        mark.setFirstAttestation(score);
+    }
+
+    public void updateSecondAttestation(Mark mark, double score) {
+        mark.setSecondAttestation(score);
+    }
+
+    public void updateFinalExam(Mark mark, double score) {
+        mark.setFinalExam(score);
+    }
+
+    public void displayMarkDetails(Mark mark) {
+        System.out.println("Mark ID: " + mark.getMarkId());
+        System.out.println("First Attestation: " + mark.getFirstAttestation());
+        System.out.println("Second Attestation: " + mark.getSecondAttestation());
+        System.out.println("Final Exam: " + mark.getFinalExam());
+    }
+}
+
